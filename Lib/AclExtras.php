@@ -124,7 +124,7 @@ class AclExtras extends CakeObject {
  **/
 	public function aco_sync($params = array()) {
 		$this->_clean = true;
-		$this->aco_update($params);
+		return $this->aco_update($params);
 	}
 
 /**
@@ -141,7 +141,7 @@ class AclExtras extends CakeObject {
 			$plugins = CakePlugin::loaded();
 		} else {
 			$plugin = $params['plugin'];
-			if (!in_array($plugin, App::objects('plugin')) || !CakePlugin::loaded($plugin)) {
+			if (!CakePlugin::loaded($plugin)) {
 				$this->err(__('<error>Plugin %s not found or not activated</error>', $plugin));
 				return false;
 			}
@@ -189,7 +189,7 @@ class AclExtras extends CakeObject {
 		}
 		if ($this->_clean) {
 			if (!$plugin) {
-				$controllers = array_merge($controllers, App::objects('plugin', null, false));
+				$controllers = array_merge($controllers, App::objects('plugin', null, false), CakePlugin::loaded());
 			}
 			$controllerFlip = array_flip($controllers);
 
@@ -333,6 +333,7 @@ class AclExtras extends CakeObject {
 		$return = $this->Acl->{$type}->verify();
 		if ($return === true) {
 			$this->out(__('<success>Tree is valid and strong</success>'));
+			return true;
 		} else {
 			$this->err(print_r($return, true));
 			return false;
@@ -351,6 +352,7 @@ class AclExtras extends CakeObject {
 		$return = $this->Acl->{$type}->recover();
 		if ($return === true) {
 			$this->out(__('Tree has been recovered, or tree did not need recovery.'));
+			return true;
 		} else {
 			$this->err(__('<error>Tree recovery failed.</error>'));
 			return false;

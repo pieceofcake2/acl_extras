@@ -55,7 +55,7 @@ class AclExtrasShell extends AppShell {
  * @return void
  **/
 	public function aco_sync() {
-		$this->AclExtras->aco_sync($this->params);
+		return $this->AclExtras->aco_sync($this->params);
 	}
 
 /**
@@ -64,8 +64,7 @@ class AclExtrasShell extends AppShell {
  * @return void
  **/
 	public function aco_update() {
-		$this->AclExtras->aco_update($this->params);
-		return true;
+		return $this->AclExtras->aco_update($this->params);
 	}
 
 	public function getOptionParser() {
@@ -132,6 +131,6 @@ class AclExtrasShell extends AppShell {
  */
 	public function recover() {
 		$this->AclExtras->args = $this->args;
-		$this->AclExtras->recover();
+		return $this->AclExtras->recover();
 	}
 }
