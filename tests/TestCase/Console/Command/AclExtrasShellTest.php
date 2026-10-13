@@ -8,8 +8,6 @@
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-use PHPUnit\Framework\MockObject\MockObject;
-
 App::uses('ConsoleOutput', 'Console');
 App::uses('ConsoleInput', 'Console');
 App::uses('AclExtrasShell', 'AclExtras.Console/Command');
@@ -30,7 +28,7 @@ class AclExtrasShellTest extends CakeTestCase
     /**
      * AclExtras mock
      *
-     * @var AclExtras&MockObject
+     * @var AclExtras&\PHPUnit\Framework\MockObject\MockObject
      */
     public $AclExtras;
 
@@ -166,7 +164,7 @@ class AclExtrasShellTest extends CakeTestCase
         $this->assertInstanceOf(ConsoleOptionParser::class, $parser);
         $this->assertSame(
             ['aco_update', 'aco_sync', 'verify', 'recover'],
-            array_keys($parser->subcommands())
+            array_keys($parser->subcommands()),
         );
     }
 }

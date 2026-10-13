@@ -17,8 +17,6 @@
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-use PHPUnit\Framework\MockObject\MockObject;
-
 App::uses('Shell', 'Console');
 App::uses('Aco', 'Model');
 App::uses('AclComponent', 'Controller/Component');
@@ -40,7 +38,7 @@ class AclExtrasTest extends CakeTestCase
     /**
      * AclExtras mock
      *
-     * @var AclExtras&MockObject
+     * @var AclExtras&\PHPUnit\Framework\MockObject\MockObject
      */
     public $Task;
 
@@ -184,8 +182,6 @@ class AclExtrasTest extends CakeTestCase
      */
     protected function _cleanAndSetup(): void
     {
-        $tableName = $this->db->fullTableName('acos');
-        $this->db->execute('DELETE FROM ' . $tableName);
         $this->Task->expects($this->any())
             ->method('getControllerList')
             ->willReturnCallback(function ($plugin = null) {
@@ -197,6 +193,7 @@ class AclExtrasTest extends CakeTestCase
             });
 
         $this->Task->startup();
+        $this->Task->Aco->deleteAll(['Aco.id >' => 0], false, false);
     }
 
     /**
@@ -209,7 +206,7 @@ class AclExtrasTest extends CakeTestCase
         $this->_cleanAndSetup();
         $this->assertTrue($this->Task->aco_update());
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
 
         $result = $Aco->node('controllers/Comments');
         $this->assertSame('Comments', $result[0]['Aco']['alias']);
@@ -260,7 +257,7 @@ class AclExtrasTest extends CakeTestCase
 
         $this->assertTrue($this->Task->aco_update(['plugin' => 'AclExtras']));
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
         $result = $Aco->node('controllers/AclExtras');
         $this->assertSame('AclExtras', $result[0]['Aco']['alias']);
         $this->assertFalse($Aco->node('controllers/Comments'));
@@ -276,7 +273,7 @@ class AclExtrasTest extends CakeTestCase
         $this->_cleanAndSetup();
         $this->Task->aco_update();
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
         $Aco->cacheQueries = false;
 
         $result = $Aco->node('controllers/Comments');
@@ -307,7 +304,7 @@ class AclExtrasTest extends CakeTestCase
         $this->_cleanAndSetup();
         $this->Task->aco_update();
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
         $Aco->cacheQueries = false;
 
         $root = $Aco->node('controllers');
@@ -331,7 +328,7 @@ class AclExtrasTest extends CakeTestCase
         $this->_cleanAndSetup();
         $this->Task->aco_update();
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
         $Aco->cacheQueries = false;
 
         $result = $Aco->node('controllers/Comments');
@@ -356,7 +353,7 @@ class AclExtrasTest extends CakeTestCase
         $this->_cleanAndSetup();
         $this->Task->aco_update();
 
-        $Aco = $this->Task->Acl->Aco;
+        $Aco = $this->Task->Aco;
         $Aco->cacheQueries = false;
 
         $result = $Aco->node('controllers/Comments');
