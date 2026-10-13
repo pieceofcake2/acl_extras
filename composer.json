@@ -1,24 +1,51 @@
 {
-	"name": "markstory/acl_extras",
-	"description": "Additional tools for managing DB ACL in CakePHP applications.",
-	"type": "cakephp-plugin",
-	"keywords": ["cakephp", "acl"],
-	"homepage": "https://github.com/markstory/acl_extras",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Mark Story",
-			"homepage": "http://mark-story.com",
-			"role": "Author"
-		}
-	],
-	"support": {
-		"issues": "https://github.com/markstory/acl_extras/issues",
-		"source": "https://github.com/markstory/acl_extras"
-	},
-	"require": {
-		"php": ">=5.2.17",
-		"cakephp/cakephp": ">=2.4 <3.0",
-		"composer/installers": "*"
-	}
+    "name": "pieceofcake2/acl_extras",
+    "description": "Additional tools for managing DB ACL in CakePHP 2 applications.",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "cakephp2", "acl", "aco"],
+    "homepage": "https://github.com/pieceofcake2/acl_extras",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Story",
+            "homepage": "https://mark-story.com",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pieceofcake2/acl_extras/issues",
+        "source": "https://github.com/pieceofcake2/acl_extras"
+    },
+    "require": {
+        "php": "^8.0",
+        "composer/installers": "*",
+        "pieceofcake2/cakephp": "^2.12"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "^5.0",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.6",
+        "pieceofcake2/app": "^2.2",
+        "pieceofcake2/phpstan-cakephp2": "^0.2.1"
+    },
+    "autoload": {
+        "classmap": ["Console/", "Lib/"]
+    },
+    "autoload-dev": {
+        "classmap": ["tests/test_app/"],
+        "exclude-from-classmap": ["vendor/pieceofcake2/app/src/Console/Command/AppShell.php"]
+    },
+    "replace": {
+        "markstory/acl_extras": "^1.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "extra": {
+        "installer-name": "AclExtras"
+    }
 }
