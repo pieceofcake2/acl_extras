@@ -34,9 +34,11 @@ class CommentsController extends Controller
     /**
      * _secret_method action
      *
+     * Public on purpose: AclExtras must skip actions prefixed with an underscore.
+     *
      * @return void
      */
-    public function _secret_method()
+    public function _secret_method() // phpcs:ignore CakePHP.NamingConventions.ValidFunctionName.PublicWithUnderscore
     {
     }
 }
