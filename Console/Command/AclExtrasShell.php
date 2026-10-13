@@ -24,15 +24,9 @@ App::uses('AclExtras', 'AclExtras.Lib');
 class AclExtrasShell extends AppShell {
 
 /**
- * Contains arguments parsed from the command line.
- *
- * @var array
- * @access public
- */
-	public $args;
-
-/**
  * AclExtras instance
+ *
+ * @var AclExtras
  */
 	public $AclExtras;
 

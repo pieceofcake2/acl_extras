@@ -58,6 +58,27 @@ class AclExtras extends CakeObject {
 	public $rootNode = 'controllers';
 
 /**
+ * Aco model instance
+ *
+ * @var Aco
+ */
+	public $Aco;
+
+/**
+ * Controller instance used to start up AclComponent
+ *
+ * @var Controller
+ */
+	public $controller;
+
+/**
+ * Shell instance used to output messages
+ *
+ * @var Shell
+ */
+	public $Shell;
+
+/**
  * Internal Clean Actions switch
  *
  * @var boolean
@@ -80,19 +101,19 @@ class AclExtras extends CakeObject {
 		$this->controller = $controller;
 	}
 
-	public function out($msg) {
+	public function out($msg, $newlines = 1, $level = Shell::NORMAL) {
 		if (!empty($this->controller->Session)) {
 			$this->controller->Flash->set($msg);
-		} else {
-			return $this->Shell->out($msg);
+		} elseif ($this->Shell) {
+			return $this->Shell->out($msg, $newlines, $level);
 		}
 	}
 
-	public function err($msg) {
+	public function err($msg, $newlines = 1) {
 		if (!empty($this->controller->Session)) {
-			$this->controller->Flash->set($msg);;
-		} else {
-			return $this->Shell->err($msg);
+			$this->controller->Flash->set($msg);
+		} elseif ($this->Shell) {
+			return $this->Shell->err($msg, $newlines);
 		}
 	}
 
@@ -218,7 +239,7 @@ class AclExtras extends CakeObject {
 		$node = $this->Aco->node($path);
 		if (!$node) {
 			$this->Aco->create(array('parent_id' => $parentId, 'model' => null, 'alias' => $alias));
-			$node = $this->Aco->save();
+			$node = (array)$this->Aco->save();
 			$node['Aco']['id'] = $this->Aco->id;
 			$this->out(__('Created Aco node: <success>%s</success>', $path), 1, Shell::VERBOSE);
 		} else {
@@ -241,13 +262,7 @@ class AclExtras extends CakeObject {
 		} catch (ReflectionException $e) {
 			return $callbacks;
 		}
-		if (version_compare(phpversion(), '5.4', '>=')) {
-			$object = $reflection->newInstanceWithoutConstructor();
-		} else {
-			$object = unserialize(
-				sprintf('O:%d:"%s":0:{}', strlen($className), $className)
-			);
-		}
+		$object = $reflection->newInstanceWithoutConstructor();
 		$implementedEvents = $method->invoke($object);
 		foreach ($implementedEvents as $event => $callable) {
 			if (is_string($callable)) {
@@ -269,17 +284,21 @@ class AclExtras extends CakeObject {
  * @return void
  */
 	protected function _checkMethods($className, $controllerName, $node, $pluginPath = false) {
+		if (!class_exists($className)) {
+			$this->err(__('Unable to get methods for "%s"', $className));
+			return false;
+		}
 		$excludes = $this->_getCallbacks($className);
 		$baseMethods = get_class_methods('Controller');
 		$actions = get_class_methods($className);
-		if ($actions == null) {
+		if (empty($actions)) {
 			$this->err(__('Unable to get methods for "%s"', $className));
 			return false;
 		}
 		$methods = array_diff($actions, $baseMethods);
 		$methods = array_diff($methods, $excludes);
 		foreach ($methods as $action) {
-			if (strpos($action, '_', 0) === 0) {
+			if (str_starts_with($action, '_')) {
 				continue;
 			}
 			$path = $this->rootNode . '/' . $pluginPath . $controllerName . '/' . $action;
@@ -293,7 +312,7 @@ class AclExtras extends CakeObject {
 				if (!isset($methodFlip[$action['Aco']['alias']])) {
 					$this->Aco->id = $action['Aco']['id'];
 					if ($this->Aco->delete()) {
-						$path = $this->rootNode . '/' . $controllerName . '/' . $action['Aco']['alias'];
+						$path = $this->rootNode . '/' . $pluginPath . $controllerName . '/' . $action['Aco']['alias'];
 						$this->out(__('Deleted Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
 					}
 				}
