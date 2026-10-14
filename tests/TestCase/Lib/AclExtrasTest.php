@@ -172,6 +172,7 @@ class AclExtrasTest extends CakeTestCase
         $this->Task->startup();
         $this->assertInstanceOf(AclComponent::class, $this->Task->Acl);
         $this->assertInstanceOf(Aco::class, $this->Task->Aco);
+        $this->assertSame($this->Task->Acl->Aco, $this->Task->Aco);
         $this->assertInstanceOf(Controller::class, $this->Task->controller);
     }
 
