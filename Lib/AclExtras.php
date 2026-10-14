@@ -17,6 +17,7 @@ App::uses('AclComponent', 'Controller/Component');
 App::uses('DbAcl', 'Model');
 App::uses('Shell', 'Console');
 App::uses('CakeObject', 'Core');
+App::uses('ClassRegistry', 'Utility');
 
 /**
  * Tools for synchronizing the ACO tree with the controllers and actions
@@ -93,7 +94,8 @@ class AclExtras extends CakeObject
         $collection = new ComponentCollection();
         $this->Acl = new AclComponent($collection);
         $this->Acl->startup($controller);
-        $this->Aco = $this->Acl->Aco;
+        // DbAcl shares the Aco model registered in ClassRegistry with AclComponent::$Aco.
+        $this->Aco = ClassRegistry::init('Aco');
         $this->controller = $controller;
     }
 
