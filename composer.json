@@ -1,6 +1,6 @@
 {
     "name": "pieceofcake2/acl_extras",
-    "description": "Additional tools for managing DB ACL in CakePHP 2 applications.",
+    "description": "Console tools for DbAcl in CakePHP 2: generate ACOs for controllers and actions, verify and recover ACL trees",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "cakephp2", "acl", "aco"],
     "homepage": "https://github.com/pieceofcake2/acl_extras",
