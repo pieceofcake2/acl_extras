@@ -151,3 +151,11 @@ the controller must also have the `Flash` component.
 ## Credits
 
 Acl Extras was originally created by [Mark Story](https://github.com/markstory/acl_extras).
+
+## Origin
+
+This package is a maintained fork of [markstory/acl_extras](https://github.com/markstory/acl_extras)
+(`markstory/acl_extras` on Packagist, last upstream version 1.2.1), originally by Mark Story. It is
+maintained for CakePHP 2 on modern PHP by [pieceofcake2](https://github.com/pieceofcake2). Changes
+from the original are listed in the
+[commit history since the fork](https://github.com/pieceofcake2/acl_extras/compare/1174758...2.x).
