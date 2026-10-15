@@ -29,8 +29,8 @@ composer require pieceofcake2/acl_extras
 
 | レイアウト | `installer-paths` |
 | --- | --- |
-| モダン (`config/`, `src/`, `templates/`, `plugins/`) | `"plugins/{$name}/": ["type:cakephp-plugin"]` |
-| レガシー (`app/Config/`, `app/Plugin/`) | `"app/Plugin/{$name}/": ["type:cakephp-plugin"]` |
+| モダン (`config/`、`src/`、`templates/`、`plugins/`) | `"plugins/{$name}/": ["type:cakephp-plugin"]` |
+| レガシー (`app/Config/`、`app/Plugin/`) | `"app/Plugin/{$name}/": ["type:cakephp-plugin"]` |
 
 `config/bootstrap.php` (レガシーレイアウトでは `app/Config/bootstrap.php`) でプラグインを読み込みます。
 すでに `CakePlugin::loadAll()` を使っている場合は不要です。
@@ -44,13 +44,13 @@ CakePlugin::load('AclExtras');
 ## シェルの要件
 
 シェルを使うには、`config/core.php` (レガシーレイアウトでは `app/Config/core.php`) で
-DbAcl が設定されていること
+DbAcl が設定されている必要があります。
 
 ```php
 Configure::write('Acl.classname', 'DbAcl');
 ```
 
-と、ACL のテーブルが存在することが必要です。
+また、ACL のテーブルが存在する必要があります。
 
 ```bash
 bin/cake schema create DbAcl
@@ -92,7 +92,7 @@ bin/cake AclExtras.AclExtras recover aro
 | `verify aco\|aro` | ACO ツリーまたは ARO ツリーのツリー構造を検証します。 |
 | `recover aco\|aro` | 壊れた ACO ツリーまたは ARO ツリーを修復します。 |
 
-`aco_update` と `aco_sync` では、`--plugin` (`-p`) で一つのプラグインだけを処理できます。
+`aco_update` と `aco_sync` では、`--plugin` (`-p`) で 1 つのプラグインだけを処理できます。
 
 コマンドが失敗した場合、たとえば存在しないプラグインを指定した場合やツリーが不正な場合、
 シェルはエラーコードで終了します。
@@ -102,7 +102,7 @@ bin/cake AclExtras.AclExtras recover aro
 ## ACO ツリー
 
 `aco_update` と `aco_sync` は、`controllers` という名前のルートノードの下に、public な
-アクションごとに一つの ACO を作成します。
+アクションごとに 1 つの ACO を作成します。
 
 ```
 controllers
