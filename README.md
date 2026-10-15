@@ -13,6 +13,13 @@ ACO nodes for all your controllers and actions, and verifies and recovers corrup
 ARO trees. This is a fork of [markstory/acl_extras](https://github.com/markstory/acl_extras)
 for [pieceofcake2/cakephp](https://github.com/pieceofcake2/cakephp).
 
+## Documentation
+
+- Website: https://pieceofcake2.github.io/acl_extras/
+- Markdown: [docs/README.md](docs/README.md) (for AI tools and offline reading)
+
+The Markdown documentation is also included in the Composer package, in the plugin's directory: `plugins/AclExtras/docs/README.md` (the location depends on your `installer-paths`). Install the package with `--dev` if you only need it for development.
+
 ## Requirements
 
 - PHP 8.0+
@@ -26,10 +33,6 @@ composer require pieceofcake2/acl_extras
 
 Then load the plugin with `CakePlugin::load('AclExtras')` and run
 `bin/cake AclExtras.AclExtras aco_sync` (legacy layout: `app/Console/cake`).
-
-## Documentation
-
-Documentation: https://pieceofcake2.github.io/acl_extras/
 
 ## Contributing
 
