@@ -42,8 +42,8 @@ See the [contribution guidelines](https://github.com/pieceofcake2/.github/blob/m
 
 ```bash
 composer install
-cp vendor/pieceofcake2/cakephp/tests/config/database.php vendor/pieceofcake2/app/config/
-DB=mysql vendor/bin/phpunit   # or DB=pgsql / DB=sqlite
+cp vendor/pieceofcake2/app/config/database.php.default vendor/pieceofcake2/app/config/database.php
+DATABASE_URL=sqlite:///:memory: vendor/bin/phpunit
 vendor/bin/phpcs
 vendor/bin/phpstan analyse
 ```
